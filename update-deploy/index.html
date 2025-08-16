@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePod - DIY Home Server Revolution</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff08" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ffd700);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Specifications Section */
+        .specs {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .spec-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .spec-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .spec-list {
+            list-style: none;
+        }
+
+        .spec-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .spec-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            border: 2px solid #667eea;
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .pricing-card .popular-badge {
+            display: none;
+        }
+        .pricing-card:hover .popular-badge {
+            display: block;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .price-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-features i {
+            color: #28a745;
+        }
+
+        /* Updates Section */
+        .updates {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .updates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .update-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .update-date {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .update-card h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+    /* Footer styles moved to shared file */
+    /* Footer stylesheet is linked in the head for better performance */
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Progress bars */
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 2s ease-out;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-online {
+            background: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+
+        .status-offline {
+            background: #dc3545;
+        }
+
+        .status-maintenance {
+            background: #ffc107;
+        }
+    </style>
+</head>
+<body>
+        <script>
+            // Hamburger menu toggle
+            document.addEventListener('DOMContentLoaded', function() {
+                const hamburger = document.querySelector('.hamburger');
+                const navLinks = document.getElementById('main-nav');
+                const body = document.body;
+                if (hamburger && navLinks) {
+                    hamburger.addEventListener('click', function() {
+                        const isOpen = navLinks.classList.toggle('open');
+                        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                        // Push down content if menu is open
+                        if (isOpen) {
+                            body.classList.add('menu-open', 'page-with-fixed-header');
+                        } else {
+                            body.classList.remove('menu-open');
+                        }
+                    });
+                }
+                // Close menu on resize if desktop
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 900 && navLinks) {
+                        navLinks.classList.remove('open');
+                        body.classList.remove('menu-open');
+                    }
+                });
+            });
+        </script>
+    <!-- ...existing head content... -->
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><i class="fa-solid fa-cube"></i>CodePod</div>
+            <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="nav-links" id="main-nav">
+                <a href="/">Home</a>
+                <a href="#features">Features</a>
+                <a href="#specs">Specifications</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#updates">Updates</a>
+                <a href="#support">Support</a>
+            </div>
+            <div class="nav-right header-actions">
+                <a href="/cart.html" class="cart-btn"><i class="fa fa-shopping-cart"></i> <span class="cart-badge">0</span></a>
+            </div>
+        </nav>
+    </header>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>CodePod</h1>
+            <p>Transform Your Raspberry Pi Zero 2W into a Powerful Home Server</p>
+            <p>Perfect for developers, students, and tech enthusiasts who want to learn, experiment, and deploy applications on their own infrastructure.</p>
+            <div class="cta-buttons">
+                <a href="#pricing" class="btn btn-primary">Get Started Now</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose CodePod?</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>5-Minute Setup</h3>
+                    <p>Get your home server running in just 5 minutes with our automated setup script. No complex configurations required.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security First</h3>
+                    <p>Built-in firewall, fail2ban protection, automatic SSL certificates, and security hardening out of the box.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-docker"></i>
+                    </div>
+                    <h3>Docker Ready</h3>
+                    <p>Deploy applications instantly with Docker containers. Includes nginx reverse proxy and automatic service discovery.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Learn by Doing</h3>
+                    <p>Perfect for students and professionals to learn Linux, Docker, networking, and DevOps practices hands-on.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Low Power</h3>
+                    <p>Runs 24/7 on just 2-3 watts of power. Environmentally friendly and cost-effective home server solution.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>Pre-configured with Git, Node.js, Python, and popular development tools. Start coding immediately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specs" class="specs">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            <div class="tabs">
+                <button class="tab active" data-tab="hardware">Hardware</button>
+                <button class="tab" data-tab="software">Software</button>
+                <button class="tab" data-tab="performance">Performance</button>
+            </div>
+            
+            <div id="hardware" class="tab-content active">
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>Raspberry Pi Zero 2 W</h3>
+                        <ul class="spec-list">
+                            <li>Quad-core ARM Cortex-A53 @ 1GHz</li>
+                            <li>512MB LPDDR2 SDRAM</li>
+                            <li>802.11 b/g/n Wi-Fi & Bluetooth 4.2</li>
+                            <li>microSD card slot</li>
+                            <li>Mini HDMI port</li>
+                            <li>2x micro USB ports</li>
+                            <li>40-pin GPIO header</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Storage & Memory</h3>
+                        <ul class="spec-list">
+                            <li>32GB+ microSD card (A2/V30 rated)</li>
+                            <li>High-endurance cards recommended</li>
+                            <li>Configurable swap space</li>
+                            <li>Automatic log rotation</li>
+                            <li>Docker volume management</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Power & Cooling</h3>
+                        <ul class="spec-list">
+                            <li>5V 2.5A USB-C power supply</li>
+                            <li>2-3W power consumption</li>
+                            <li>Heat sink included</li>
+                            <li>Protective case</li>
+                            <li>Temperature monitoring</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Connectivity</h3>
+                        <ul class="spec-list">
+                            <li>Wi-Fi 802.11 b/g/n</li>
+                            <li>Bluetooth 4.2 BLE</li>
+                            <li>USB OTG support</li>
+                            <li>GPIO expansion</li>
+                            <li>I2C, SPI, UART interfaces</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="software" class="tab-content">
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>Operating System</h3>
+                        <ul class="spec-list">
+                            <li>Raspberry Pi OS Lite (32-bit)</li>
+                            <li>Debian-based, headless</li>
+                            <li>Optimized for Pi Zero 2 W</li>
+                            <li>Automatic security updates</li>
+                            <li>SSH enabled by default</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Container Platform</h3>
+                        <ul class="spec-list">
+                            <li>Docker Engine (latest stable)</li>
+                            <li>Docker Compose</li>
+                            <li>Automated container management</li>
+                            <li>Image optimization</li>
+                            <li>Resource monitoring</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Web Services</h3>
+                        <ul class="spec-list">
+                            <li>Nginx reverse proxy</li>
+                            <li>Let's Encrypt SSL certificates</li>
+                            <li>Automatic certificate renewal</li>
+                            <li>HTTP/2 support</li>
+                            <li>Rate limiting & security headers</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Development Tools</h3>
+                        <ul class="spec-list">
+                            <li>Git version control</li>
+                            <li>Node.js & npm</li>
+                            <li>Python 3 & pip</li>
+                            <li>Text editors (nano, vim)</li>
+                            <li>System monitoring tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="performance" class="tab-content">
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>System Performance</h3>
+                        <ul class="spec-list">
+                            <li>Boot time: ~45 seconds</li>
+                            <li>Idle CPU: 1-2%</li>
+                            <li>Idle RAM: ~80MB</li>
+                            <li>Max operating temp: 85°C</li>
+                            <li>Typical temp: 45-55°C</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Network Performance</h3>
+                        <ul class="spec-list">
+                            <li>Wi-Fi: Up to 150 Mbps</li>
+                            <li>Latency: <2ms local</li>
+                            <li>Concurrent connections: 1000+</li>
+                            <li>HTTP requests/sec: 500+</li>
+                            <li>SSL handshakes/sec: 50+</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Application Capacity</h3>
+                        <ul class="spec-list">
+                            <li>Simultaneous containers: 5-10</li>
+                            <li>Static websites: Unlimited</li>
+                            <li>API endpoints: 10-20</li>
+                            <li>Database size: 1-5GB</li>
+                            <li>File storage: 20-25GB</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Monitoring</h3>
+                        <ul class="spec-list">
+                            <li>Real-time resource monitoring</li>
+                            <li>Container health checks</li>
+                            <li>Log aggregation</li>
+                            <li>Performance metrics</li>
+                            <li>Alert notifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your CodePod Package</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>DIY Kit</h3>
+                    <div class="price">$45</div>
+                    <p>Build your own with our shopping list</p>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> Detailed parts list</li>
+                        <li><i class="fas fa-check"></i> Assembly guide</li>
+                        <li><i class="fas fa-check"></i> Software setup script</li>
+                        <li><i class="fas fa-check"></i> Community support</li>
+                        <li><i class="fas fa-check"></i> Documentation access</li>
+                    </ul>
+                    <a href="./pi_2W.html" class="btn btn-primary" style="display:inline-block; margin-top:1.5rem;">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="popular-badge" style="content:'POPULAR';position:absolute;top:20px;right:-40px;background:linear-gradient(45deg,#ff6b6b,#ffd700);color:white;padding:5px 50px;transform:rotate(45deg);font-size:0.8rem;font-weight:bold;display:none;z-index:3;">POPULAR</div>
+                    <h3>Complete Kit</h3>
+                    <div class="price">$89</div>
+                    <p>Everything you need in one package</p>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> Raspberry Pi Zero 2 W</li>
+                        <li><i class="fas fa-check"></i> 32GB microSD card (pre-flashed)</li>
+                        <li><i class="fas fa-check"></i> Power supply & case</li>
+                        <li><i class="fas fa-check"></i> Heat sink kit</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> 30-day money back guarantee</li>
+                    </ul>
+                    <a href="./pi3_W.html" class="btn btn-primary">Order Now</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$249</div>
+                    <p>For teams and educational institutions</p>
+                    <ul class="price-features">
+                        <li><i class="fas fa-check"></i> 5x Complete Kits</li>
+                        <li><i class="fas fa-check"></i> Classroom setup guide</li>
+                        <li><i class="fas fa-check"></i> Instructor training</li>
+                        <li><i class="fas fa-check"></i> Custom curriculum</li>
+                        <li><i class="fas fa-check"></i> Dedicated support</li>
+                        <li><i class="fas fa-check"></i> Volume discounts</li>
+                    </ul>
+                    <a href="./contact.html" class="btn btn-primary" style="display:inline-block; margin-top:1.5rem;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="updates" class="updates">
+        <div class="container">
+            <h2 class="section-title">Latest Updates & News</h2>
+            <div class="updates-grid">
+                <div class="update-card">
+                    <div class="update-date">
+                        <span class="status-indicator status-online"></span>
+                        July 15, 2025
+                    </div>
+                    <h3>CodePod v2.1 Released</h3>
+                    <p>New features include improved Docker management, enhanced security configurations, and better resource monitoring. The setup time has been reduced to under 3 minutes!</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%"></div>
+                    </div>
+                    <small>95% user satisfaction rate</small>
+                </div>
+                <div class="update-card">
+                    <div class="update-date">
+                        <span class="status-indicator status-online"></span>
+                        July 10, 2025
+                    </div>
+                    <h3>New Educational Partnership</h3>
+                    <p>We've partnered with 50+ universities to provide CodePod kits for computer science and engineering programs. Special educational pricing now available.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <small>75% of partner schools reporting positive feedback</small>
+                </div>
+                <div class="update-card">
+                    <div class="update-date">
+                        <span class="status-indicator status-online"></span>
+                        July 5, 2025
+                    </div>
+                    <h3>Community Showcase</h3>
+                    <p>Amazing projects from our community! From IoT weather stations to personal wikis, see what others are building with CodePod.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 88%"></div>
+                    </div>
+                    <small>500+ community projects shared</small>
+                </div>
+                <div class="update-card">
+                    <div class="update-date">
+                        <span class="status-indicator status-maintenance"></span>
+                        June 28, 2025
+                    </div>
+                    <h3>Performance Optimization</h3>
+                    <p>Major performance improvements for Pi Zero 2 W. Memory usage reduced by 20% and boot time improved by 30% with the latest optimizations.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 92%"></div>
+                    </div>
+                    <small>92% faster startup times</small>
+                </div>
+                <div class="update-card">
+                    <div class="update-date">
+                        <span class="status-indicator status-online"></span>
+                        June 20, 2025
+                    </div>
+                    <h3>New Application Templates</h3>
+                    <p>Added 15 new application templates including WordPress, Ghost blog, GitLab runner, and IoT dashboards. Deploy popular services with one command.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <small>15 new templates available</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer include placeholder -->
+    <div id="site-footer"></div>
+    <script src="/assets/js/include-footer.js"></script>
+    <script>
+        // enable cart sync to development server
+        window.CART_SYNC = true;
+        window.CART_API = 'http:///api/cart';
+    </script>
+    <script src="/assets/js/cart.js"></script>
+
+    <!-- Footer include placeholder -->
+    <script>
+
+        
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Animate progress bars when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressFill = entry.target.querySelector('.progress-fill');
+                        if (progressFill) {
+                            progressFill.style.width = progressFill.style.width || '0%';
+                        }
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                observer.observe(bar);
+            });
+        });
+    </script>
+</body>
+</html>

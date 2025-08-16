@@ -192,8 +192,8 @@
                             window.CodePodCart = {
                                 addItem(item) {
                                     try {
-                                        const CART_KEY = 'cart';
-                                        const raw = localStorage.getItem(CART_KEY) || '[]';
+                                        const CART_KEY = 'codepod_cart';
+                                        const raw = localStorage.getItem(CART_KEY) || '{}';
                                         const parsed = JSON.parse(raw || '{}');
                                         const items = parsed.items || [];
                                         const normalized = { id: item.id||'', title: item.title||'Item', price: Number(item.price)||0, img: item.img||'', qty: Number(item.qty)||1 };
@@ -202,12 +202,12 @@
                                             if (existing) existing.qty = (Number(existing.qty)||1) + (Number(normalized.qty)||1);
                                             else items.push(normalized);
                                         } else items.push(normalized);
-                                        localStorage.setItem(CART_KEY, JSON.stringify(items));
+                                        localStorage.setItem(CART_KEY, JSON.stringify({ items }));
                                         try { if (typeof window.updateHeaderBadge === 'function') window.updateHeaderBadge(items); } catch(e){}
                                         return items;
                                     } catch (e) { console.warn('fallback addItem failed', e); return []; }
                                 },
-                                clear() { try { localStorage.removeItem('cart'); if (typeof window.render === 'function') window.render(); } catch(e){} }
+                                clear() { try { localStorage.removeItem('codepod_cart'); if (typeof window.render === 'function') window.render(); } catch(e){} }
                             };
                         }
                     } catch (e) { console.warn('failed to inject fallback cart shim', e); }

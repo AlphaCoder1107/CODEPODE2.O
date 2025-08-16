@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Order Receipt</title>
+  <link rel="stylesheet" href="/assets/css/receipt.css">
+</head>
+<body>
+  <main class="receipt-wrap">
+    <section class="receipt-card" id="content">
+      <div class="loading">Loading order...</div>
+    </section>
+    <aside class="receipt-actions" id="actions" aria-hidden="true">
+      <!-- filled by JS -->
+    </aside>
+  </main>
+  <div id="a11y-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <script>
+    (function(){
+      // Always clear the cart on receipt page load (order complete)
+      localStorage.removeItem('codepod_cart');
+      function qs(name) { const url = new URL(window.location.href); return url.searchParams.get(name); }
+  const orderId = qs('order') || qs('localOrderId');
+  const TARGET_TZ = qs('tz') || 'Asia/Kolkata';
+      const content = document.getElementById('content');
+      const actions = document.getElementById('actions');
+
+      // Helper: format many possible timestamp shapes into a human-friendly local string
+      function formatTimestamp(v) {
+        if (v === undefined || v === null || v === '') return '—';
+        let date;
+        if (v instanceof Date) date = v;
+        else if (typeof v === 'number') date = (v > 1e12) ? new Date(v) : new Date(v * 1000);
+        else {
+          const s = String(v).trim();
+          if (/^\d+$/.test(s)) {
+            const n = Number(s);
+            date = (n > 1e12) ? new Date(n) : new Date(n * 1000);
+          } else {
+            const parsed = Date.parse(s);
+            if (!isNaN(parsed)) date = new Date(parsed);
+            else return s;
+          }
+        }
+        try {
+          const fmt = new Intl.DateTimeFormat(undefined, { timeZone: TARGET_TZ, year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          return fmt.format(date);
+        } catch (err) {
+          return date.toLocaleString();
+        }
+      }
+
+      function renderNotFound(msg, raw) {
+        content.innerHTML = `<div class="notice warning"><h2>Order not found</h2><p>${msg}</p></div>`;
+        if (raw) content.innerHTML += `<pre class="raw">${raw}</pre>`;
+        actions.innerHTML = `<a class="btn" href="/">Back to shop</a>`;
+        actions.setAttribute('aria-hidden', 'false');
+      }
+
+      if (!orderId) {
+        renderNotFound('No order id provided in the URL.');
+        return;
+      }
+
+      // Try current origin first, then payments server fallback
+      const endpoints = [ '/orders', 'http://localhost:3001/orders' ];
+
+      (async function tryFetch(){
+        let lastErr = null;
+        for (const ep of endpoints) {
+          try {
+            const r = await fetch(ep, { cache: 'no-cache' });
+            if (!r.ok) { lastErr = `HTTP ${r.status} from ${ep}`; continue; }
+            const list = await r.json();
+            if (!Array.isArray(list)) { lastErr = `Invalid response from ${ep}`; continue; }
+            const found = list.find(o => (o.id === orderId) || (o.razorpay_order_id === orderId) || (o.razorpay_link_id === orderId) || (o.razorpay_response && o.razorpay_response.id === orderId));
+            if (!found) { lastErr = `Order not found at ${ep}`; continue; }
+            showOrder(found);
+            return;
+          } catch (err) { lastErr = String(err); }
+        }
+        renderNotFound(lastErr || 'Could not fetch orders');
+      })();
+
+      function showOrder(o) {
+        const amount = ((o.amount_paise||o.amount||0)/100).toFixed(2);
+        const status = (o.status || 'UNKNOWN').toUpperCase();
+        const statusClass = status === 'PAID' ? 'status-paid' : (status === 'FAILED' ? 'status-failed' : 'status-pending');
+
+        content.innerHTML = `
+          <header class="receipt-header">
+            <h1>Thank you</h1>
+            <div class="meta"><span class="muted">Order</span> <strong>${o.id}</strong></div>
+          </header>
+          <div class="receipt-grid">
+            <div class="box">
+              <div class="label">Status</div>
+              <div class="value"><span class="status ${statusClass}">${status}</span></div>
+            </div>
+            <div class="box">
+              <div class="label">Amount</div>
+              <div class="value">₹${amount}</div>
+            </div>
+            <div class="box">
+              <div class="label">Razorpay Order</div>
+              <div class="value">${o.razorpay_order_id || (o.razorpay_response && o.razorpay_response.id) || ''}</div>
+            </div>
+            <div class="box">
+              <div class="label">Payment ID</div>
+              <div class="value">${o.razorpay_payment_id || ''}</div>
+            </div>
+          </div>
+          <section class="details">
+            <h3>Customer</h3>
+            <p>${escapeHtml((o.customer && (o.customer.name || o.customer.email)) || '—')}</p>
+              <h3>Details</h3>
+              <dl class="kv-list">
+                <div class="kv-row"><dt>Order ID</dt><dd><span class="kv-value">${escapeHtml(o.id || '—')}</span> <button class="copy-btn" data-copy="${escapeHtml(o.id || '')}" aria-label="Copy Order ID">Copy</button></dd></div>
+                <div class="kv-row"><dt>Status</dt><dd>${escapeHtml(status)}</dd></div>
+                <div class="kv-row"><dt>Amount</dt><dd>₹${amount}</dd></div>
+                <div class="kv-row"><dt>Razorpay Order</dt><dd><span class="kv-value">${escapeHtml(o.razorpay_order_id || (o.razorpay_response && o.razorpay_response.id) || '—')}</span> <button class="copy-btn" data-copy="${escapeHtml(o.razorpay_order_id || (o.razorpay_response && o.razorpay_response.id) || '')}" aria-label="Copy Razorpay Order ID">Copy</button></dd></div>
+                <div class="kv-row"><dt>Payment ID</dt><dd><span class="kv-value">${escapeHtml(o.razorpay_payment_id || o.razorpay_payment || '—')}</span> <button class="copy-btn" data-copy="${escapeHtml(o.razorpay_payment_id || o.razorpay_payment || '')}" aria-label="Copy Payment ID">Copy</button></dd></div>
+                <div class="kv-row"><dt>Customer name</dt><dd>${escapeHtml((o.customer && o.customer.name) || '—')}</dd></div>
+                <div class="kv-row"><dt>Customer email</dt><dd>${escapeHtml((o.customer && o.customer.email) || '—')}</dd></div>
+                <div class="kv-row"><dt>Customer phone</dt><dd>${escapeHtml((o.customer && o.customer.phone) || (o.customer && o.customer.contact) || '—')}</dd></div>
+                <div class="kv-row"><dt>Reference ID</dt><dd>${escapeHtml(o.reference_id || o.local_reference || '—')}</dd></div>
+                <div class="kv-row"><dt>Short URL</dt><dd>${o.razorpay_short_url ? `<a href="${escapeHtml(o.razorpay_short_url)}" target="_blank" rel="noopener">${escapeHtml(o.razorpay_short_url)}</a> <button class="copy-btn" data-copy="${escapeHtml(o.razorpay_short_url)}" aria-label="Copy Short URL">Copy</button>` : '—'}</dd></div>
+                <div class="kv-row"><dt>Created</dt><dd><span class="timestamp">${escapeHtml(formatTimestamp(o.created_at || o.created || (o.razorpay_response && o.razorpay_response.created_at) || (o.razorpay_response && o.razorpay_response.created) || '—'))}</span></dd></div>
+                <div class="kv-row"><dt>Viewed</dt><dd><span class="timestamp">${escapeHtml(formatTimestamp(new Date()))}</span> <small class="muted">(${escapeHtml(TARGET_TZ)})</small></dd></div>
+              </dl>
+
+              <div class="raw-wrap">
+                <button id="toggle-raw" class="btn">View raw JSON</button>
+                <pre class="raw" style="display:none">${escapeHtml(JSON.stringify(o, null, 2))}</pre>
+              </div>
+          </section>
+        `;
+
+        // actions
+        actions.innerHTML = `
+          <a class="btn primary" href="/">Continue shopping</a>
+          <a class="btn" href="/cart.html">View cart</a>
+          <a class="btn" href="#" id="view-json">View JSON</a>
+        `;
+        actions.setAttribute('aria-hidden', 'false');
+        document.getElementById('view-json').addEventListener('click', (e)=>{ 
+          e.preventDefault(); 
+          const pre = content.querySelector('.raw'); 
+          if (pre) { 
+            pre.style.display = pre.style.display === 'none' ? 'block' : 'none'; 
+            if (pre.style.display !== 'none') pre.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+
+        const a11y = document.getElementById('a11y-status');
+
+        const toggleBtn = content.querySelector('#toggle-raw');
+        if (toggleBtn) {
+          // initial aria state
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.addEventListener('click', (e)=>{
+            const pre = content.querySelector('.raw');
+            if (!pre) return;
+            if (pre.style.display === 'none') {
+              pre.style.display = 'block';
+              toggleBtn.textContent = 'Hide raw JSON';
+              toggleBtn.setAttribute('aria-expanded', 'true');
+              if (a11y) a11y.textContent = 'Raw JSON revealed';
+              pre.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              pre.style.display = 'none';
+              toggleBtn.textContent = 'View raw JSON';
+              toggleBtn.setAttribute('aria-expanded', 'false');
+              if (a11y) a11y.textContent = 'Raw JSON hidden';
+            }
+          });
+        }
+
+        // clipboard copy buttons
+        const copyButtons = content.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+          const val = (btn.getAttribute('data-copy') || '').trim();
+          if (!val) { btn.style.display = 'none'; btn.setAttribute('aria-hidden', 'true'); return; }
+          // ensure accessible name exists
+          if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Copy value');
+          btn.addEventListener('click', async (e) => {
+            try {
+              await navigator.clipboard.writeText(val);
+              const orig = btn.textContent;
+              btn.textContent = 'Copied';
+              if (a11y) a11y.textContent = (btn.getAttribute('aria-label') || 'Value') + ' copied to clipboard';
+              setTimeout(()=> { btn.textContent = orig; if (a11y) a11y.textContent = ''; }, 1500);
+            } catch (err) {
+              // fallback copy
+              const tmp = document.createElement('textarea'); tmp.value = val; tmp.style.position='fixed'; tmp.style.opacity=0; document.body.appendChild(tmp); tmp.select();
+              try { document.execCommand('copy'); btn.textContent = 'Copied'; if (a11y) a11y.textContent = (btn.getAttribute('aria-label') || 'Value') + ' copied to clipboard'; setTimeout(()=> { btn.textContent = 'Copy'; tmp.remove(); if (a11y) a11y.textContent = ''; }, 1500); } catch(e){ tmp.remove(); if (a11y) a11y.textContent = 'Copy failed'; alert('Copy failed — please select and copy manually.'); }
+            }
+          });
+        });
+      }
+
+      function escapeHtml(s) { return String(s).replace(/[&<>\"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    })();
+  </script>
+</body>
+</html>

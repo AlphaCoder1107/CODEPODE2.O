@@ -1,34 +1,34 @@
 // Minimal cart script for the static site.
 // Stores cart in localStorage under key 'codepod_cart'
 (function () {
-  const CART_KEY = 'cart';
+  const CART_KEY = 'codepod_cart';
   const cartListEl = document.getElementById('cartList');
   const totalEl = document.getElementById('cartTotal');
   const proceedBtn = document.getElementById('proceedBtn');
+  const isCartPage = Boolean(cartListEl && totalEl);
   const DEV_HOSTS = ['localhost','127.0.0.1'];
   const IS_LOCALHOST = DEV_HOSTS.includes(window.location.hostname);
 
   function loadCart() {
     try {
-  const raw = localStorage.getItem(CART_KEY) || '[]';
-  const parsed = JSON.parse(raw);
-  if (Array.isArray(parsed)) return parsed;
-  if (parsed && Array.isArray(parsed.items)) return parsed.items;
+      const raw = localStorage.getItem(CART_KEY) || '{}';
+      const parsed = JSON.parse(raw);
+      return parsed.items || [];
     } catch (e) {
       return [];
     }
   }
 
   function saveCart(items) {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    localStorage.setItem(CART_KEY, JSON.stringify({ items }));
   }
 
   function render() {
-  localStorage.setItem(CART_KEY, JSON.stringify(items));
+    const items = loadCart();
     if (!items || items.length === 0) {
       if (isCartPage) {
         cartListEl.innerHTML = '<p>Your cart is empty.</p>';
-  let cart = loadCart();
+        totalEl.textContent = '0.00';
         if (proceedBtn) proceedBtn.disabled = !IS_LOCALHOST;
         // Clear breakdown if present
         const breakdown = document.getElementById('cartBreakdown');
@@ -408,3 +408,4 @@
   }
 
 })();
+

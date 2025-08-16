@@ -9,7 +9,13 @@ require('dotenv').config();
 const Razorpay = require('razorpay');
 
 const app = express();
-app.use(cors());
+// Configure CORS to allow your website domain
+app.use(cors({
+  origin: ['https://codepode.in', 'http://codepode.in', 'http://codepode.in.s3-website-us-east-1.amazonaws.com', 'https://codepode.in.s3-website-us-east-1.amazonaws.com', 'http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+}));
 // capture raw body for webhook verification while still parsing JSON for other routes
 app.use(express.json({ verify: (req, _res, buf) => { req.rawBody = buf; } }));
 app.use(morgan('dev'));

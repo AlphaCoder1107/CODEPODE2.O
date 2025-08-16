@@ -19,7 +19,7 @@
 
         <div class="cart-grid">
           <div class="cart-items">
-              <div id="cart-items">(loading cart...)</div>
+            <div id="cartList">(loading cart...)</div>
             <!-- Receipt-like breakdown will be injected here by JS -->
           </div>
 
@@ -37,12 +37,12 @@
 
             <div class="total-row" style="margin-top:16px">
               <div>Total:</div>
-               <div>₹<span id="cart-total">0.00</span></div>
+              <div>₹<span id="cartTotal">0.00</span></div>
             </div>
 
             <div class="proceed">
-                <button id="proceedBtn" class="btn">Proceed to Buy</button>
-                <button onclick="clearCart()" class="btn secondary" style="margin-left:8px">Clear Cart</button>
+              <button id="proceedBtn" class="btn">Proceed to Buy</button>
+              <button class="btn secondary" onclick="window.CodePodCart && window.CodePodCart.clear && window.CodePodCart.clear()" style="margin-left:8px">Clear cart</button>
             </div>
           </aside>
         </div>

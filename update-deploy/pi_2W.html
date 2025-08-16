@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy DIY Kit - CodePod</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/pi_2W.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>CodePod</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./index.html#home">Home</a></li>
+                <li><a href="./index.html#features">Features</a></li>
+                <li><a href="./index.html#specs">Specifications</a></li>
+                <li><a href="./index.html#pricing">Pricing</a></li>
+                <li><a href="./index.html#updates">Updates</a></li>
+                <li><a href="./index.html#support">Support</a></li>
+            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <!-- existing links -->
+                </ul>
+                <div class="header-actions">
+                    <a class="cart-btn" href="/cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div style="height: 80px;"></div>
+    <div class="buyer-container">
+        <div class="buyer-gallery">
+            <img src="./pi_2W/img1 codepod.jpg" alt="Raspberry Pi Zero 2 W" class="main-img" id="mainImg" onerror="this.onerror=null;this.src='https://via.placeholder.com/350x220?text=Image+Not+Found';">
+            <div class="buyer-thumbs">
+                <img src="./pi_2W/img1 codepod.jpg" alt="Thumb 1" class="selected" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_2W/img2 codepod.jpg" alt="Thumb 2" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_2W/img3 codepod.jpg" alt="Thumb 3" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_2W/img4 codepod.jpg" alt="Thumb 4" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_2W/img5 codepod.jpg" alt="Thumb 5" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+            </div>
+        </div>
+        <div class="buyer-details">
+            <div>
+                <div class="buyer-title">Raspberry Pi Zero 2 W DIY Kit</div>
+                <div class="buyer-brand">Brand: CodePod</div>
+                <div class="buyer-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                    <span style="color:#333;font-size:1rem;">3.5 (120 ratings)</span>
+                </div>
+            </div>
+            <div>
+                <span class="buyer-price">₹3,499</span>
+                <span class="buyer-mrp">₹4,999</span>
+                <span class="buyer-offer">-30%</span>
+            </div>
+            <div class="buyer-desc">
+                Build your own home server with the CodePod DIY Kit. Includes all essential parts, guides, and community support. Perfect for learning, experimenting, and deploying real-world projects.
+            </div>
+            <ul class="buyer-features">
+                <li><i class="fas fa-check"></i> Raspberry Pi Zero 2 W (Quad-core, 1GHz, 512MB RAM)</li>
+                <li><i class="fas fa-check"></i> 32GB microSD card (A2/V30, pre-flashed)</li>
+                <li><i class="fas fa-check"></i> Power supply & case</li>
+                <li><i class="fas fa-check"></i> Heat sink kit</li>
+                <li><i class="fas fa-check"></i> Assembly & software setup guide</li>
+                <li><i class="fas fa-check"></i> Community & documentation access</li>
+            </ul>
+        </div>
+        <div class="buyer-buybox">
+            <div class="buyer-price">₹2,099</div>
+            <div class="buyer-stock"><i class="fas fa-check-circle"></i> In stock</div>
+            <div class="buyer-delivery"><i class="fas fa-truck"></i> Free delivery by <b>Monday, 18 August</b></div>
+            <div class="buyer-qty">
+                <label for="qty">Quantity:</label>
+                <select id="qty">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <button class="btn-cart" data-cart-add data-id="pi2w-kit" data-title="Raspberry Pi Zero 2 W DIY Kit" data-price="2099" data-img="./pi_2W/img1 codepod.jpg"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            <button class="btn-buy"><i class="fas fa-bolt"></i> Buy Now</button>
+            <div class="buyer-policy">
+                <span><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                <span><i class="fas fa-undo"></i> 7-day Return</span>
+                <span><i class="fas fa-shipping-fast"></i> Fast Shipping</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeImg(el) {
+            document.getElementById('mainImg').src = el.src;
+            document.querySelectorAll('.buyer-thumbs img').forEach(img => img.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+        // Buy Now: add to cart and open cart (Orders + Checkout.js only)
+        (function(){
+            const btn = document.querySelector('.btn-buy');
+            if (!btn) return;
+            btn.addEventListener('click', function(){
+                const addBtn = document.querySelector('[data-cart-add]');
+                const id = addBtn && addBtn.getAttribute('data-id');
+                const title = addBtn && addBtn.getAttribute('data-title');
+                const img = addBtn && addBtn.getAttribute('data-img');
+                const priceText = document.querySelector('.buyer-price')?.textContent || '₹0';
+                const rupees = Number((priceText.replace(/[^0-9.]/g, '') || '0'));
+                const qty = Number(document.getElementById('qty')?.value || 1);
+                (async function ensureCart(){
+                    let waited=0; while(!window.CodePodCart && waited<10){ await new Promise(r=>setTimeout(r,100)); waited++; }
+                    if (!window.CodePodCart) { alert('Cart not available'); return; }
+                    window.CodePodCart.addItem({ id, title, img, price: rupees, qty });
+                    window.location.href = '/cart.html';
+                })();
+            });
+        })();
+    </script>
+    <!-- Footer include placeholder -->
+    <div id="site-footer"></div>
+    <script src="/assets/js/include-footer.js"></script>
+    <script>
+        window.CART_SYNC = true;
+        window.CART_API = 'http://localhost:3001/api/cart';
+    </script>
+    <script src="/assets/js/cart.js"></script>
+    </body>
+    </html>
