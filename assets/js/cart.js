@@ -301,7 +301,7 @@
             const v = await verify.json().catch(() => null);
             if (verify.ok && v && v.ok) {
               // success — clear cart, let Razorpay close the popup and then redirect to success page (or show message)
-              localStorage.removeItem('codepod_cart');
+              localStorage.removeItem('cart');
               window.location.href = '/receipt.html?order=' + encodeURIComponent(order.id);
               return;
             }
@@ -341,7 +341,7 @@
 
   // Listen for cart changes in other tabs/pages and update badge
   window.addEventListener('storage', function(e) {
-    if (e.key === 'codepod_cart') {
+  if (e.key === 'cart') {
       try {
         const items = loadCart();
         updateHeaderBadge(items);
