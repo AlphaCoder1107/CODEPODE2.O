@@ -1,0 +1,204 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CodePod Website - Complete Infrastructure'
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: Your domain name
+  ContactEmail:
+    Type: String
+    Description: Email for contact form submissions
+
+Resources:
+  # IAM Role for Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: SESPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                Resource: '*'
+
+  # Lambda Function
+  ContactFormFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: codepod-contact
+      Runtime: nodejs18.x
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          CONTACT_EMAIL: !Ref ContactEmail
+          DOMAIN: !Ref DomainName
+      Code:
+        ZipFile: |
+          const AWS = require('aws-sdk');
+          const ses = new AWS.SES({ region: 'us-east-1' });
+          
+          exports.handler = async (event) => {
+              const headers = {
+                  'Access-Control-Allow-Origin': '*',
+                  'Access-Control-Allow-Headers': 'Content-Type',
+                  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+              };
+              
+              if (event.httpMethod === 'OPTIONS') {
+                  return { statusCode: 200, headers };
+              }
+              
+              try {
+                  const data = JSON.parse(event.body);
+                  const emailParams = {
+                      Source: `noreply@${process.env.DOMAIN}`,
+                      Destination: { ToAddresses: [process.env.CONTACT_EMAIL] },
+                      Message: {
+                          Subject: { Data: `New Contact: ${data.companyName}` },
+                          Body: { 
+                              Text: { 
+                                  Data: `Company: ${data.companyName}\nContact: ${data.contactName}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nWebsite: ${data.website || 'N/A'}\nIndustry: ${data.industry || 'N/A'}\nEmployees: ${data.employees || 'N/A'}\nAddress: ${data.address || 'N/A'}\nMessage: ${data.message || 'N/A'}` 
+                              } 
+                          }
+                      }
+                  };
+                  await ses.sendEmail(emailParams).promise();
+                  return { statusCode: 200, headers, body: JSON.stringify({ message: 'Email sent successfully' }) };
+              } catch (error) {
+                  console.error(error);
+                  return { statusCode: 500, headers, body: JSON.stringify({ message: 'Failed to send email' }) };
+              }
+          };
+
+  # API Gateway
+  ContactAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: codepod-contact-api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+
+  # API Gateway Integration
+  ContactIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref ContactAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactFormFunction.Arn}/invocations'
+      PayloadFormatVersion: '2.0'
+
+  # API Gateway Route
+  ContactRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref ContactAPI
+      RouteKey: 'POST /contact'
+      Target: !Sub 'integrations/${ContactIntegration}'
+
+  # API Gateway Stage
+  ContactStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref ContactAPI
+      StageName: prod
+      AutoDeploy: true
+
+  # Lambda Permission
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ContactFormFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub '${ContactAPI}/*/*'
+
+  # S3 Bucket
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref DomainName
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  # S3 Bucket Policy
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Sub '${WebsiteBucket}/*'
+
+  # SSL Certificate
+  SSLCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      SubjectAlternativeNames:
+        - !Sub 'www.${DomainName}'
+      ValidationMethod: DNS
+
+  # CloudFront Distribution
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref DomainName
+          - !Sub 'www.${DomainName}'
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+        DefaultRootObject: index.html
+        Enabled: true
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt WebsiteBucket.RegionalDomainName
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: http-only
+        ViewerCertificate:
+          AcmCertificateArn: !Ref SSLCertificate
+          SslSupportMethod: sni-only
+
+Outputs:
+  WebsiteURL:
+    Value: !Sub 'https://${DomainName}'
+  
+  APIEndpoint:
+    Value: !Sub 'https://${ContactAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/contact'
+    
+  S3Bucket:
+    Value: !Ref WebsiteBucket

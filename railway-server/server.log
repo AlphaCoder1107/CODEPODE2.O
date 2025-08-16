@@ -1,0 +1,6 @@
+Payments server listening on 3001
+[0mPOST /api/create-payment-link [32m200[0m 756.775 ms - 89[0m
+[0mPOST /api/create-payment-link [33m400[0m 0.868 ms - 140[0m
+[0mPOST /api/create-payment-link [33m400[0m 0.524 ms - 140[0m
+[0mPOST /api/checkout/webhook [33m404[0m 0.825 ms - 160[0m
+[0mGET /api/health [32m200[0m 0.524 ms - 23[0m

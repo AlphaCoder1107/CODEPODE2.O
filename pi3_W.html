@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Complete Kit - CodePod</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/pi3_W.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>CodePod</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#specs">Specifications</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#updates">Updates</a></li>
+                <li><a href="index.html#support">Support</a></li>
+            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <!-- existing links -->
+                </ul>
+                <div class="header-actions">
+                    <a class="cart-btn" href="/cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div style="height: 80px;"></div>
+    <div class="buyer-container">
+        <div class="buyer-gallery">
+            <img src="./pi_3B/pi1.jpg" alt="Raspberry Pi Zero 2 W" class="main-img" id="mainImg" onerror="this.onerror=null;this.src='https://via.placeholder.com/350x220?text=Image+Not+Found';">
+            <div class="buyer-thumbs">
+                <img src="./pi_3B/pi1.jpg" alt="Thumb 1" class="selected" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_3B/pi2.jpg" alt="Thumb 2" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_3B/pi3.jpg" alt="Thumb 3" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_3B/pi4.jpg" alt="Thumb 4" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./pi_3B/pi1.jpg" alt="Thumb 5" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+            </div>
+        </div>
+        <div class="buyer-details">
+            <div>
+                <div class="buyer-title">Raspberry Pi Zero 2 W Complete Kit</div>
+                <div class="buyer-brand">Brand: CodePod</div>
+                <div class="buyer-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                    <span style="color:#333;font-size:1rem;">4.0 (200 ratings)</span>
+                </div>
+            </div>
+            <div>
+                <span class="buyer-price">₹5,249</span>
+                <span class="buyer-mrp">₹6,999</span>
+                <span class="buyer-offer">-25%</span>
+            </div>
+            <div class="buyer-desc">
+                Get everything you need in one package with the CodePod Complete Kit. Includes Raspberry Pi Zero 2 W, pre-flashed microSD, power supply, case, heat sink, and more. Hassle-free setup and premium support.
+            </div>
+            <ul class="buyer-features">
+                <li><i class="fas fa-check"></i> Raspberry Pi Zero 2 W (Quad-core, 1GHz, 512MB RAM)</li>
+                <li><i class="fas fa-check"></i> 32GB microSD card (A2/V30, pre-flashed)</li>
+                <li><i class="fas fa-check"></i> Power supply & case</li>
+                <li><i class="fas fa-check"></i> Heat sink kit</li>
+                <li><i class="fas fa-check"></i> Priority support</li>
+                <li><i class="fas fa-check"></i> 30-day money back guarantee</li>
+            </ul>
+        </div>
+        <div class="buyer-buybox">
+            <div class="buyer-price">₹4,499</div>
+            <div class="buyer-stock"><i class="fas fa-check-circle"></i> In stock</div>
+            <div class="buyer-delivery"><i class="fas fa-truck"></i> Free delivery by <b>Monday, 18 August</b></div>
+            <div class="buyer-qty">
+                <label for="qty">Quantity:</label>
+                <select id="qty">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <button class="btn-cart" data-cart-add data-id="pi3-complete" data-title="Raspberry Pi Zero 2 W Complete Kit" data-price="4499" data-img="./pi_3B/pi1.jpg"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            <button class="btn-buy"><i class="fas fa-bolt"></i> Buy Now</button>
+            <div class="buyer-policy">
+                <span><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                <span><i class="fas fa-undo"></i> 7-day Return</span>
+                <span><i class="fas fa-shipping-fast"></i> Fast Shipping</span>
+            </div>
+        </div>
+    </div>
+    <!-- Footer is included via /assets/js/include-footer.js; footer CSS will be injected automatically -->
+    <!-- Footer include placeholder: loaded by assets/js/include-footer.js -->
+    <div id="site-footer"></div>
+
+    <script src="/assets/js/include-footer.js"></script>
+    <script>
+        window.CART_SYNC = true;
+        window.CART_API = 'http://localhost:3001/api/cart';
+    </script>
+    <script src="/assets/js/cart.js"></script>
+    </body>
+    </html>

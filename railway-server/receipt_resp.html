@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Receipt — CodePod</title>
+    <style>
+      body{font-family:Inter,Arial,Helvetica,sans-serif;background:#f3f4f6;padding:24px}
+      .receipt{max-width:800px;margin:0 auto;background:#fff;padding:28px;border-radius:8px;box-shadow:0 8px 30px rgba(2,6,23,0.08)}
+      .heading{display:flex;justify-content:space-between;align-items:center}
+      .title{font-size:20px;font-weight:600}
+      .meta{color:#6b7280}
+      table{width:100%;margin-top:18px;border-collapse:collapse}
+      td,th{padding:10px;border-bottom:1px solid #eef2f7;text-align:left}
+      .total{font-weight:700;font-size:1.05rem}
+      .muted{color:#6b7280;font-size:0.95rem}
+      .actions{margin-top:18px}
+      .btn{display:inline-block;padding:8px 12px;border-radius:6px;background:#4f46e5;color:#fff;text-decoration:none}
+      @media print{ .actions{display:none} body{background:#fff} .receipt{box-shadow:none} }
+    </style>
+  </head>
+  <body>
+    <div class="receipt">
+      <div class="heading">
+        <div>
+          <div class="title">CodePod — Payment Receipt</div>
+          <div class="meta">Order: <strong>local_1755309608285</strong></div>
+        </div>
+        <div style="text-align:right">
+          <div class="muted">2025-08-16T02:00:08.285Z</div>
+          <div style="margin-top:8px">Status: <strong>PAID</strong></div>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Item</th><th style="width:180px">Details</th></tr>
+        <tr><td>Order ID</td><td>local_1755309608285</td></tr>
+        <tr><td>Amount</td><td class="total">₹10.00 INR</td></tr>
+        <tr><td>Payment ID</td><td>—</td></tr>
+        <tr><td>Status</td><td>PAID</td></tr>
+        <tr><td>Customer</td><td>Good • good@example.com • 9876543210</td></tr>
+      </table>
+
+      <div class="actions">
+        <a class="btn" href="#" onclick="window.print();return false">Print / Save PDF</a>
+        <a class="btn" href="/" style="background:#10b981;margin-left:8px">Back to store</a>
+      </div>
+    </div>
+  </body>
+</html>

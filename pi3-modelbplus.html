@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Raspberry Pi 3 Model B+ - CodePod</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/pi3-modelbplus.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>CodePod</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#specs">Specifications</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#updates">Updates</a></li>
+                <li><a href="index.html#support">Support</a></li>
+            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <!-- existing links -->
+                </ul>
+                <div class="header-actions">
+                    <a class="cart-btn" href="/cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div style="height: 80px;"></div>
+    <div class="buyer-container">
+        <div class="buyer-gallery">
+            <img src="./img2.jpg" alt="Raspberry Pi 3 Model B+" class="main-img" id="mainImg" onerror="this.onerror=null;this.src='https://via.placeholder.com/350x220?text=Image+Not+Found';">
+            <div class="buyer-thumbs">
+                <img src="./img2.jpg" alt="Thumb 1" class="selected" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./img3.jpg" alt="Thumb 2" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./img4.jpg" alt="Thumb 3" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+                <img src="./img5.jpg" alt="Thumb 4" onclick="changeImg(this)" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x40?text=Thumb';">
+            </div>
+        </div>
+        <div class="buyer-details">
+            <div>
+                <div class="buyer-title">Raspberry Pi 3 Model B+ Motherboard</div>
+                <div class="buyer-brand">Brand: Raspberry Pi</div>
+                <div class="buyer-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                    <span style="color:#333;font-size:1rem;">4.2 (350 ratings)</span>
+                </div>
+            </div>
+            <div>
+                <span class="buyer-price">₹3,499</span>
+                <span class="buyer-mrp">₹4,499</span>
+                <span class="buyer-offer">-22%</span>
+            </div>
+            <div class="buyer-desc">
+                Raspberry Pi 3 Model B+ is a powerful, affordable single-board computer. Perfect for personal computing, DIY projects, and learning. No manufacturer warranty and parts warranty.
+            </div>
+            <ul class="buyer-features">
+                <li><i class="fas fa-check"></i> 1.4GHz 64-bit quad-core ARMv8 CPU</li>
+                <li><i class="fas fa-check"></i> 1GB LPDDR2 RAM</li>
+                <li><i class="fas fa-check"></i> Bluetooth 4.2, Bluetooth Low Energy</li>
+                <li><i class="fas fa-check"></i> 802.11n Wireless LAN, 10/100Mbps LAN Speed</li>
+                <li><i class="fas fa-check"></i> Compatible Devices: Personal Computer</li>
+                <li><i class="fas fa-check"></i> Compatible Processors: Broadcom ARMv8</li>
+                <li><i class="fas fa-check"></i> Chipset Type: ARM</li>
+                <li><i class="fas fa-check"></i> Warranty, Parts: No Manufacturer Warranty</li>
+            </ul>
+        </div>
+        <div class="buyer-buybox">
+            <div class="buyer-price">₹3,499</div>
+            <div class="buyer-stock"><i class="fas fa-check-circle"></i> In stock</div>
+            <div class="buyer-delivery"><i class="fas fa-truck"></i> Free delivery by <b>Monday, 18 August</b></div>
+            <div class="buyer-qty">
+                <label for="qty">Quantity:</label>
+                <select id="qty">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <button class="btn-cart" data-cart-add data-id="pi3-modelbplus" data-title="Raspberry Pi 3 Model B+ Motherboard" data-price="3499" data-img="./img2.jpg"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            <button class="btn-buy"><i class="fas fa-bolt"></i> Buy Now</button>
+            <div class="buyer-policy">
+                <span><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                <span><i class="fas fa-undo"></i> 7-day Return</span>
+                <span><i class="fas fa-shipping-fast"></i> Fast Shipping</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeImg(el) {
+            document.getElementById('mainImg').src = el.src;
+            document.querySelectorAll('.buyer-thumbs img').forEach(img => img.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+    </script>
+    <!-- Footer include placeholder -->
+    <div id="site-footer"></div>
+    <script src="/assets/js/include-footer.js"></script>
+        <script>
+            window.CART_SYNC = true;
+            window.CART_API = 'http://localhost:3001/api/cart';
+        </script>
+        <script src="/assets/js/cart.js"></script>
+    </body>
+    </html>

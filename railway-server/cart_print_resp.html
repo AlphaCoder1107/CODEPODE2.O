@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cart - CodePod</title>
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+    <link rel="stylesheet" href="/assets/css/cart.css" />
+  </head>
+  <body>
+    <!-- include shared header (injected by include-footer.js) -->
+    <div class="container">
+      <div class="cart-card">
+        <div class="cart-head">
+          <h1>Your Cart</h1>
+          <div class="muted">Items in cart: <span class="cart-badge">0</span></div>
+        </div>
+
+        <div class="cart-grid">
+          <div class="cart-items">
+            <div id="cartList">
+  <div class="cart-item">
+    <img src="/pi_2W/img1 codepod.jpg" alt=""/>
+    <div class="meta">
+      <strong>Raspberry Pi Zero 2 W DIY Kit</strong>
+      <div>Qty: 1</div>
+      <div>Price: ₹2099.00</div>
+    </div>
+  </div>
+</div>
+          </div>
+
+          <aside class="cart-summary" aria-labelledby="summaryTitle">
+            <div id="summaryTitle" style="font-weight:600">Order summary</div>
+            <div style="margin-top:12px">
+              <div class="muted">Customer details</div>
+              <div class="form-row" style="margin-top:8px">
+                <label>Name<br><input id="codepod_name" type="text"/></label>
+                <label>Email<br><input id="codepod_email" type="email"/></label>
+                <label>Phone<br><input id="codepod_phone" type="tel" placeholder="10-digit mobile"/></label>
+              </div>
+              <div id="phoneError" style="color:#b00020; margin-top:0.5rem; display:none"></div>
+            </div>
+
+            <div class="total-row" style="margin-top:16px">
+              <div>Total:</div>
+              <div>₹<span id="cartTotal">0.00</span></div>
+            </div>
+
+            <div class="proceed">
+              <button id="proceedBtn" class="btn">Proceed to Buy</button>
+              <button class="btn secondary" onclick="window.CodePodCart && window.CodePodCart.clear && window.CodePodCart.clear()" style="margin-left:8px">Clear cart</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+  <!-- libphonenumber-js UMD bundle (client-side validation) -->
+  <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.10.22/bundle/libphonenumber-js.min.js"></script>
+  <script>window.RAZORPAY_KEY_ID = "rzp_test_R5XmEfkjyyHrMQ";</script>
+  <script src="/assets/js/cart.js"></script>
+    <script>window.__serverRenderedCart = true; window.__serverCart = {"items":[{"id":"pi2w","title":"Raspberry Pi Zero 2 W DIY Kit","price":2099,"qty":1,"img":"/pi_2W/img1 codepod.jpg"}]};</script>
+</body>
+</html>
+

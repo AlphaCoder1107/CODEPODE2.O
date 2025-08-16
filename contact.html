@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — CodePod</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <style>
+    :root{
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --accent-start: #667eea;
+        --accent-end: #764ba2;
+        --accent-2: #ffd700;
+        --input-border: #e6e8ec;
+    }
+
+    /* Page layout */
+    html, body { height: 100%; }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color: #1f2937;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .spacer { height: 82px; }
+
+    .container { max-width: 1100px; margin: 2.5rem auto; padding: 0 1rem; }
+
+    /* Card */
+    .form-card {
+        background: var(--card);
+        padding: 2.25rem;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(15,23,42,0.06);
+        border: 1px solid rgba(15,23,42,0.03);
+    }
+
+    h1 { font-size: 1.6rem; margin: 0 0 0.25rem; color: #111827; }
+    p.lead { margin: 0 0 1.2rem; color: var(--muted); }
+
+    /* Form grid */
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 1.25rem; align-items: start; }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; color: #111827; }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 0.8rem 0.9rem;
+        border: 1px solid var(--input-border);
+        border-radius: 10px;
+        font-size: 0.98rem;
+        color: #111827;
+        background: white;
+        transition: box-shadow .15s ease, border-color .15s ease;
+    }
+
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent-start); box-shadow: 0 6px 20px rgba(102,126,234,0.08); }
+
+    textarea { min-height: 140px; resize: vertical; }
+
+    /* Actions */
+    .form-actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+    .btn {
+        display: inline-flex; align-items: center; gap: 0.6rem; justify-content: center;
+        background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+        color: white; padding: 0.9rem 1.25rem; border-radius: 999px; border: none; cursor: pointer; font-weight: 700; font-size: 0.95rem;
+        box-shadow: 0 8px 20px rgba(118,75,162,0.12);
+        transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(103,58,183,0.14); }
+
+    /* Inline label next to the button */
+    .form-actions label { display: inline-flex; align-items: center; gap: 0.5rem; color: #374151; font-weight: 600; }
+
+    /* Message */
+    #formMessage { font-size: 0.95rem; margin-top: 0.6rem; }
+
+    /* Small screens */
+    @media (max-width: 900px) {
+        .container { padding: 0 1rem; }
+        .form-grid { grid-template-columns: 1fr; }
+        .spacer { height: 72px; }
+        .form-card { padding: 1.5rem; }
+        .btn { width: 100%; }
+        .form-actions label { width: 100%; margin-top: 0.25rem; }
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>CodePod</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#specs">Specifications</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#updates">Updates</a></li>
+                <li><a href="index.html#support">Support</a></li>
+            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <!-- existing links -->
+                </ul>
+                <div class="header-actions">
+                    <a class="cart-btn" href="/cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="spacer"></div>
+
+    <main class="container">
+        <div class="form-card">
+            <h1>Contact Us — Company Details</h1>
+            <p class="lead">Fill the form below to send your company details and enquiries. We'll get back to you within 2 business days.</p>
+
+            <form id="companyForm" method="post" action="#">
+                <div class="form-grid">
+                    <div>
+                        <label for="companyName">Company Name</label>
+                        <input id="companyName" name="companyName" type="text" required />
+                    </div>
+                    <div>
+                        <label for="contactName">Contact Person</label>
+                        <input id="contactName" name="contactName" type="text" required />
+                    </div>
+                    <div>
+                        <label for="email">Business Email</label>
+                        <input id="email" name="email" type="email" required />
+                    </div>
+                    <div>
+                        <label for="phone">Phone</label>
+                        <input id="phone" name="phone" type="tel" />
+                    </div>
+                    <div>
+                        <label for="website">Website</label>
+                        <input id="website" name="website" type="url" placeholder="https://" />
+                    </div>
+                    <div>
+                        <label for="industry">Industry</label>
+                        <select id="industry" name="industry">
+                            <option value="">Select industry</option>
+                            <option>Technology</option>
+                            <option>Education</option>
+                            <option>Retail</option>
+                            <option>Manufacturing</option>
+                            <option>Healthcare</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="full">
+                        <label for="employees">Number of Employees</label>
+                        <input id="employees" name="employees" type="number" min="1" />
+                    </div>
+                    <div class="full">
+                        <label for="address">Company Address</label>
+                        <textarea id="address" name="address"></textarea>
+                    </div>
+                    <div class="full">
+                        <label for="message">Additional Message / Requirements</label>
+                        <textarea id="message" name="message"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn" type="submit">Submit Company Details</button>
+                    <label style="margin-left:1rem; font-weight:600; color:#555;"><input id="mockToggle" type="checkbox" style="margin-right:0.4rem;"> Simulate submission</label>
+                    <span style="color:#666;font-size:0.95rem; margin-left:1rem">Or email us at <a href="mailto:hello@codepod.in">hello@codepod.in</a></span>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer include placeholder -->
+    <div id="site-footer"></div>
+    <script src="/assets/js/include-footer.js"></script>
+    <script>
+        window.CART_SYNC = true;
+        window.CART_API = 'http://localhost:3001/api/cart';
+    </script>
+    <script src="/assets/js/cart.js"></script>
+    <script>
+    // Simple form submit handler: POSTs JSON to a backend endpoint.
+    // Change ENDPOINT to your server endpoint (e.g. /api/contact)
+
+    (function(){
+        const form = document.getElementById('companyForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        const ENDPOINT = ''; // Replace with your API Gateway URL
+        const alwaysMock = location.search.includes('mock');
+
+        function showMessage(text, isError){
+            let el = document.getElementById('formMessage');
+            if(!el){
+                el = document.createElement('div');
+                el.id = 'formMessage';
+                el.style.marginLeft = '0';
+                el.style.fontSize = '0.95rem';
+                form.parentNode.insertBefore(el, form.nextSibling);
+            }
+            el.textContent = text;
+            el.style.color = isError ? '#b00020' : '#0a7a3a';
+            el.style.marginTop = '0.6rem';
+        }
+
+        form.addEventListener('submit', async function(e){
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            const data = {};
+            new FormData(form).forEach((v,k)=> data[k]=v);
+
+            try {
+                // If mock is enabled (checkbox or URL flag), simulate a successful request
+                const mockElem = document.getElementById('mockToggle');
+                const useMock = alwaysMock || (mockElem && mockElem.checked);
+                if (useMock) {
+                    await new Promise(r => setTimeout(r, 800));
+                    showMessage('(Mock) Thanks — your company details have been received.');
+                    form.reset();
+                } else {
+                    const res = await fetch(ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (res.ok) {
+                        showMessage('Thanks — your company details have been sent. We will contact you soon.');
+                        form.reset();
+                    } else {
+                        let msg = 'Failed to submit the form';
+                        try { const j = await res.json(); if (j && j.message) msg = j.message; } catch (_) {}
+                        showMessage(msg, true);
+                    }
+                }
+            } catch (err) {
+                showMessage('Network error. Please try again later.', true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Company Details';
+            }
+        });
+
+    })();
+    </script>
+</body>
+</html>
