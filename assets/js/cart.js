@@ -10,10 +10,12 @@
 
   function loadCart() {
     try {
-  const raw = localStorage.getItem(CART_KEY) || '[]';
-  const parsed = JSON.parse(raw);
-  if (Array.isArray(parsed)) return parsed;
-  if (parsed && Array.isArray(parsed.items)) return parsed.items;
+      let raw = localStorage.getItem(CART_KEY);
+      if (!raw) return [];
+      let parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+      if (parsed && Array.isArray(parsed.items)) return parsed.items;
+      return [];
     } catch (e) {
       return [];
     }
@@ -24,6 +26,8 @@
   }
 
   function render() {
+  // Always safely initialize items
+  items = Array.isArray(items) ? items : [];
   localStorage.setItem(CART_KEY, JSON.stringify(items));
     if (!items || items.length === 0) {
       if (isCartPage) {
@@ -348,7 +352,8 @@
   // expose a small API for other pages to add items
   window.CodePodCart = {
     addItem(item) {
-      const items = loadCart();
+      let items = loadCart();
+      items = Array.isArray(items) ? items : [];
       // normalize incoming item
       const normalized = { id: item.id || '', title: item.title || 'Item', price: Number(item.price)||0, img: item.img||'', qty: Number(item.qty)||1 };
       if (normalized.id) {
