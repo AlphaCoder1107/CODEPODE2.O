@@ -49,7 +49,7 @@
       const row = document.createElement('div');
       row.className = 'cart-item';
       const img = document.createElement('img');
-      img.src = it.img || '/pi_2W/img1 codepod.jpg';
+  img.src = it.img || '/pi_2W/img1_codepod.jpg';
       const meta = document.createElement('div');
       meta.className = 'meta';
       meta.innerHTML = `<div><strong>${escapeHtml(it.title || 'Item')}</strong></div>`;
@@ -405,7 +405,7 @@
       el.className = 'mini-cart-drawer';
       document.body.appendChild(el);
     }
-    el.innerHTML = `<div class="mini-inner"><img src="${escapeHtml(item.img||'/pi_2W/img1 codepod.jpg')}" alt=""/><div class="mini-meta"><div class="mini-title">${escapeHtml(item.title||'Item')}</div><div class="mini-qty">Qty: ${escapeHtml(String(item.qty||1))}</div></div><div class="mini-actions"><a href="/cart.html" class="btn small primary">View cart</a></div></div>`;
+    el.innerHTML = `<div class="mini-inner"><img src="${escapeHtml(item.img||'/pi_2W/img1_codepod.jpg')}" alt=""/><div class="mini-meta"><div class="mini-title">${escapeHtml(item.title||'Item')}</div><div class="mini-qty">Qty: ${escapeHtml(String(item.qty||1))}</div></div><div class="mini-actions"><a href="/cart.html" class="btn small primary">View cart</a></div></div>`;
     // show
     requestAnimationFrame(()=> el.classList.add('show'));
     // auto hide after 3s

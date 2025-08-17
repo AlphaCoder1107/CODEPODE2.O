@@ -102,7 +102,7 @@ app.get('/cart.html', (req, res) => {
           const title = escapeHtml(it.title || 'Item');
           const qty = Number(it.qty || 1);
           const price = Number(it.price || 0).toFixed(2);
-          const img = escapeHtml(it.img || '/pi_2W/img1 codepod.jpg');
+          const img = escapeHtml(it.img || '/pi_2W/img1_codepod.jpg');
           return `  <div class="cart-item">\n    <img src="${img}" alt=""/>\n    <div class="meta">\n      <strong>${title}</strong>\n      <div>Qty: ${qty}</div>\n      <div>Price: ₹${price}</div>\n    </div>\n  </div>`;
         }).join('\n');
       }
@@ -160,7 +160,7 @@ app.post('/cart/print', express.json(), (req, res) => {
         const title = escape(it.title || 'Item');
         const qty = Number(it.qty || 1);
         const price = Number(it.price || 0).toFixed(2);
-        const img = escape(it.img || '/pi_2W/img1 codepod.jpg');
+  const img = escape(it.img || '/pi_2W/img1_codepod.jpg');
         return `  <div class="cart-item">\n    <img src="${img}" alt=""/>\n    <div class="meta">\n      <strong>${title}</strong>\n      <div>Qty: ${qty}</div>\n      <div>Price: ₹${price}</div>\n    </div>\n  </div>`;
       }).join('\n');
     }

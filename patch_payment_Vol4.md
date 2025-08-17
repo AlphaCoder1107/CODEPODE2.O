@@ -40,7 +40,7 @@ document.getElementById("addToCartBtn").addEventListener("click", () => {
         title: "Raspberry Pi Zero 2 W DIY Kit",
         price: 2099,
         qty: 1,
-        img: "./pi_2W/img1 codepod.jpg"
+        img: "./pi_2W/img1_codepod.jpg"
     });
 });
 </script>
